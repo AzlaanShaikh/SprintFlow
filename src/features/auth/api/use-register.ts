@@ -22,7 +22,7 @@ export const useRegister=()=>{
         onSuccess:()=>{
             toast.success("Register successful")
             router.refresh();
-            queryClient.invalidateQueries({queryKey:["current"]});
+            // queryClient.invalidateQueries({queryKey:["current"]});
         },
         onError:(error)=>{
             toast.error("Failed to register")
