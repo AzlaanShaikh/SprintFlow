@@ -100,7 +100,7 @@ export const CreateWorkspaceForm = ({onCancel}:CreateWorkspaceFormProps) => {
                           <Image
                           alt="logo"
                           fill 
-                          className=" object-cover"
+                          className="object-cover"
                           src={field.value instanceof File ? URL.createObjectURL(field.value):field.value} />
                         </div>
             ):(
