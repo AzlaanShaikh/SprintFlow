@@ -1,6 +1,6 @@
 "use client";
 import { useForm } from "react-hook-form";
-import { createWorkspaceSchema } from "../schemas";
+import { createWorkspaceSchema, updateWorkspaceSchema } from "../schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRef } from "react";
 import {z} from "zod";
@@ -19,35 +19,41 @@ import {
 import { DottedSeparator } from "@/components/dotted-seperator";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { useCreateWorkspace } from "../api/use-create-workspace.ts";
-import { ImageIcon } from "lucide-react";
+import { ArrowLeft, ImageIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
+import { Workspace } from "../types";
+import { Arrow } from "@radix-ui/react-dropdown-menu";
+import { useUpdateWorksapce } from "../api/use-update-workspace";
 
-interface CreateWorkspaceFormProps {
+interface EditWorkspaceFormProps {
     onCancel?:()=>void;
+    initialValues:Workspace
 }
 
-export const CreateWorkspaceForm = ({onCancel}:CreateWorkspaceFormProps) => {
+export const EditWorkspaceForm = ({onCancel,initialValues}:EditWorkspaceFormProps) => {
   const router =useRouter();
 
-  const {mutate,isPending}=useCreateWorkspace()
+  const {mutate,isPending}=useUpdateWorksapce()
 
   const inputRef = useRef<HTMLInputElement>(null);
-    const form =useForm<z.infer<typeof createWorkspaceSchema>>({
-        resolver:zodResolver(createWorkspaceSchema),
+    const form =useForm<z.infer<typeof updateWorkspaceSchema>>({
+        resolver:zodResolver(updateWorkspaceSchema),
         defaultValues:{
-            name:""
+            ...initialValues,
+            image:initialValues.image || "",
         }
     })
 
-    const onSubmit=(values:z.infer<typeof createWorkspaceSchema>)=>{
+    const onSubmit=(values:z.infer<typeof updateWorkspaceSchema>)=>{
         const finalValues={
             ...values,
             image :values.image instanceof File ? values.image:"",
         }
 
-        mutate({form:finalValues},{
+        mutate({form:finalValues,
+          param:{workspaceId:initialValues.$id}
+        },{
           onSuccess:({data})=>{
             form.reset();
             router.push(`/workspaces/${data.$id}`)
@@ -64,10 +70,16 @@ export const CreateWorkspaceForm = ({onCancel}:CreateWorkspaceFormProps) => {
     }
 
   return (
+    <div className="flex flex-col gap-y-4 ">
     <Card className="w-full h-full border-none shadow-none">
-      <CardHeader className="flex  p-7">
+      <CardHeader className="flex  flex-row items-center gap-x-4 p-7 space-y-0">
+        <Button size={"sm"} variant={"secondary"}onClick={onCancel ? onCancel :()=>router.back()}>
+        <ArrowLeft className="size-4 mr-2" />
+          Back
+          
+        </Button>
         <CardTitle className="text-xl font-bold">
-            Create Workspace
+            {initialValues.name}
         </CardTitle>
     </CardHeader>
     <div className="px-7">
@@ -125,7 +137,7 @@ export const CreateWorkspaceForm = ({onCancel}:CreateWorkspaceFormProps) => {
                         onChange={handleImageChange}
                         disabled={isPending}
                         />
-                        {field.value ? ( <Button
+                         {field.value ? ( <Button
                         type="button"
                         disabled={isPending}
                         variant={"destructive"}
@@ -147,7 +159,6 @@ export const CreateWorkspaceForm = ({onCancel}:CreateWorkspaceFormProps) => {
                           onClick={()=>inputRef.current?.click()}
                           >Upload Image</Button>
                         )}
-                       
                       </div>
                   </div>
               </div>
@@ -172,12 +183,30 @@ export const CreateWorkspaceForm = ({onCancel}:CreateWorkspaceFormProps) => {
               variant={"primary"}
               disabled={isPending}
               >
-                  Create Workspace
+                  Save Changes
               </Button>
             </div>
           </form>
         </Form>
     </CardContent>
     </Card>
+    <Card className=" w-full h-full border-none shadow-none">
+      <CardContent className="p-7">
+            <div className="flex flex-col">
+              <h3 className=" font-bold">Danger Zone</h3>
+              <p className="text-sm text-muted-foreground">
+                Deleting a workspace is irreversible. All data will be lost.
+              </p>
+              <Button className="mt-6 w-fit ml-auto" variant="destructive" size="sm"
+              type="button"
+              disabled={isPending}
+              onClick={()=>{}}>
+                Delete Workspace
+              </Button>
+            </div>
+      </CardContent>
+
+    </Card>
+    </div>
   )
 }
