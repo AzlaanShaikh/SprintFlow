@@ -1,4 +1,4 @@
-"use-client"
+"use client"
 import { DottedSeparator } from "@/components/dotted-seperator";
 import { Button } from "@/components/ui/button";
 import {
