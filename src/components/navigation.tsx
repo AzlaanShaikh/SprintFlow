@@ -6,7 +6,7 @@ import {GoCheckCircle, GoCheckCircleFill, GoHome,GoHomeFill} from "react-icons/g
 
 import { useWorkspaceId } from "@/features/workspaces/hooks/use-workspace-id"
 import { usePathname } from "next/navigation";
-import path from "path";
+
 
 const routes =[
     {
@@ -18,7 +18,7 @@ const routes =[
     },
     {
         label:"My Task",
-        href:"/task",
+        href:"/tasks",
         icon:GoCheckCircle,
         activeIcon:GoCheckCircleFill
     },
@@ -30,7 +30,7 @@ const routes =[
     },
     {
         label:"Members",
-        href:"/member",
+        href:"/members",
         icon:UserIcon,
         activeIcon:UserIcon
     }

@@ -6,15 +6,15 @@ import { useRef } from "react";
 import {z} from "zod";
 
 import Image from "next/image";
-import { Avatar,AvatarFallback,AvatarImage } from "@/components/ui/avatar";
-import { Card,CardContent,CardDescription,CardTitle,CardHeader } from "@/components/ui/card";
+import { Avatar,AvatarFallback } from "@/components/ui/avatar";
+import { Card,CardContent,CardTitle,CardHeader } from "@/components/ui/card";
 import {
     Form,
     FormControl,
     FormLabel,
     FormField,
     FormItem,
-    FormMessage,
+    
   } from "@/components/ui/form"
 import { DottedSeparator } from "@/components/dotted-seperator";
 import { Input } from "@/components/ui/input";
@@ -51,9 +51,9 @@ export const CreateProjectForm = ({onCancel}:CreateProjectFormProps) => {
         }
 
         mutate({form:finalValues},{
-          onSuccess:()=>{
+          onSuccess:({data})=>{
             form.reset();
-            // TODO: Redirect to project page
+            router.push(`/workspaces/${workspaceId}/projects/${data.$id}`);
           }
     })
         

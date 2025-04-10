@@ -1,20 +1,19 @@
 "use client";
 import { useForm } from "react-hook-form";
-import { createWorkspaceSchema, updateWorkspaceSchema } from "../schemas";
+import { updateWorkspaceSchema } from "../schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRef } from "react";
 import {z} from "zod";
 
 import Image from "next/image";
-import { Avatar,AvatarFallback,AvatarImage } from "@/components/ui/avatar";
-import { Card,CardContent,CardDescription,CardTitle,CardHeader } from "@/components/ui/card";
+import { Avatar,AvatarFallback } from "@/components/ui/avatar";
+import { Card,CardContent,CardTitle,CardHeader } from "@/components/ui/card";
 import {
     Form,
     FormControl,
     FormLabel,
     FormField,
     FormItem,
-    FormMessage,
   } from "@/components/ui/form"
 import { DottedSeparator } from "@/components/dotted-seperator";
 import { Input } from "@/components/ui/input";
@@ -23,7 +22,7 @@ import { ArrowLeft, CopyIcon, ImageIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { Workspace } from "../types";
-import { Arrow } from "@radix-ui/react-dropdown-menu";
+
 import { useUpdateWorksapce } from "../api/use-update-workspace";
 import { useConfirm } from "@/hooks/use-confirm";
 import { useDeleteWorkspace } from "../api/use-delete-workspace";
@@ -87,10 +86,6 @@ export const EditWorkspaceForm = ({onCancel,initialValues}:EditWorkspaceFormProp
 
      resetInviteCode({
       param:{workspaceId:initialValues.$id}
-     },{
-      onSuccess:()=>{
-        router.refresh();
-      }
      });
       
 
@@ -104,13 +99,7 @@ export const EditWorkspaceForm = ({onCancel,initialValues}:EditWorkspaceFormProp
 
         mutate({form:finalValues,
           param:{workspaceId:initialValues.$id}
-        },{
-          onSuccess:({data})=>{
-            form.reset();
-            router.push(`/workspaces/${data.$id}`)
-            // TODO: Redirect to the workspace page
-          }
-    })
+        })
         
     }
     const handleImageChange=(e:React.ChangeEvent<HTMLInputElement>)=>{

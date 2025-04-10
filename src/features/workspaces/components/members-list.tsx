@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button"
 import { useWorkspaceId } from "../hooks/use-workspace-id"
 
-import { Card,CardContent,CardHeader,CardDescription,CardFooter,CardTitle } from "@/components/ui/card"
+import { Card,CardContent,CardHeader,CardDescription,CardTitle } from "@/components/ui/card"
 import { ArrowLeftCircleIcon, MoreVerticalIcon } from "lucide-react"
 import Link from "next/link"
 import { DottedSeparator } from "@/components/dotted-seperator"
@@ -64,8 +64,10 @@ export const MembersList =()=>{
 
         <Card className=" w-full h-full border-none shadow-none">
             <ConfirmDialog/>
-            <CardHeader className=" flex flow-row items-center gap-x-4 p-7 space-y-0">
-                <Button>
+            <CardHeader className="flex items-center gap-4">
+                
+                <Button className="flex items-center gap-x-2 "
+                 asChild>
                     <Link href={`/workspaces/${workspaceId}`}>
                     <ArrowLeftCircleIcon className=" size-4 mr-2"/>
                     Back
@@ -74,6 +76,9 @@ export const MembersList =()=>{
                 <CardTitle className="text-xl font-bold">
                     Members List 
                 </CardTitle>
+                <CardDescription className="text-sm text-muted-foreground">
+                    {data?.documents.length} members
+                </CardDescription>
             </CardHeader>
             <div className=" px-7">
                 <DottedSeparator className=""/>

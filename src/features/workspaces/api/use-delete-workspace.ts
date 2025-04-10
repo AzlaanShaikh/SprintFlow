@@ -1,4 +1,4 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation,  useQueryClient } from "@tanstack/react-query";
 import { InferRequestType,InferResponseType } from "hono";
 
 import { client } from "@/lib/rpc";
@@ -23,7 +23,7 @@ export const useDeleteWorkspace=()=>{
             queryClient.invalidateQueries({queryKey:["workspaces"]});
             queryClient.invalidateQueries({queryKey:["workspace",data.$id]});
         },
-        onError:(error)=>{
+        onError:()=>{
             toast.error("Failed to delete workspace");
         }
     })

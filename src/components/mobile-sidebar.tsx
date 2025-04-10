@@ -16,6 +16,7 @@ export const MobileSidebar=()=>{
         setIsOpen(false);
     },[pathname])
     return(
+        <div className="lg:hidden h-full">
         <Sheet modal={false} open={isOpen} onOpenChange={setIsOpen}>
             <SheetTrigger asChild>
                 <Button size={"icon"} variant={"secondary"} className="lg:hidden">
@@ -26,5 +27,6 @@ export const MobileSidebar=()=>{
                 <Sidebar/>
             </SheetContent>
         </Sheet>
+        </div>
     )
 }

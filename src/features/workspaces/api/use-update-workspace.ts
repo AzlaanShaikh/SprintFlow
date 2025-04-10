@@ -1,8 +1,9 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { InferRequestType,InferResponseType } from "hono";
 
 import { client } from "@/lib/rpc";
 import { toast } from "sonner";
+
 
 
 type ResponseType=InferResponseType<typeof client.api.workspaces[":workspaceId"]["$patch"], 200>
@@ -21,6 +22,7 @@ export const useUpdateWorksapce=()=>{
         },
         onSuccess:({data})=>{
             toast.success("Workspace updated successfully");
+            
             queryClient.invalidateQueries({queryKey:["workspaces"]});
             queryClient.invalidateQueries({queryKey:["workspace",data.$id]});
         },

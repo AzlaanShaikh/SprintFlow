@@ -8,6 +8,7 @@ export const getCurrent=async()=>{
     
         return await account.get();
     } catch (error) {
+        console.error("Error fetching current user:", error);
         
         return null;
     }

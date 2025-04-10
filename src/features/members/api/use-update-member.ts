@@ -1,4 +1,4 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation,  useQueryClient } from "@tanstack/react-query";
 import { InferRequestType,InferResponseType } from "hono";
 
 import { client } from "@/lib/rpc";
@@ -22,7 +22,7 @@ export const useUpdateMember=()=>{
             toast.success("member updated successfully");
             queryClient.invalidateQueries({queryKey:["members"]});
         },
-        onError:(error)=>{
+        onError:()=>{
             toast.error("Failed to update member");
         }
     })

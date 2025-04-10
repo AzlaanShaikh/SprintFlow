@@ -1,5 +1,5 @@
 "use client"
-import { useGetProjects } from "@/features/projects/api/use-get-project";
+import { useGetProjects } from "@/features/projects/api/use-get-projects";
 import { ProjectAvatar } from "@/features/projects/components/project-avatar";
 import { useCreateProjectModal } from "@/features/projects/hooks/use-create-project-modal";
 import { useWorkspaceId } from "@/features/workspaces/hooks/use-workspace-id";
@@ -10,7 +10,6 @@ import { RiAddCircleFill } from "react-icons/ri";
 
 export const Projects =()=>{
 
-  const projectId =null ;
   const workspaceId= useWorkspaceId()
   const {data}= useGetProjects({workspaceId})
   const pathname=usePathname()
@@ -25,7 +24,7 @@ export const Projects =()=>{
       </div>
 
       {data?.documents.map((project)=>{
-        const href=`/workspaces/${workspaceId}/projects/${projectId}`
+        const href=`/workspaces/${workspaceId}/projects/${project.$id}`
         const isActive=pathname===href
         return (
           <Link href={href} key={project.$id}>

@@ -1,4 +1,4 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation,  useQueryClient } from "@tanstack/react-query";
 import { InferRequestType,InferResponseType } from "hono";
 
 import { client } from "@/lib/rpc";
@@ -24,7 +24,7 @@ export const useCreateProject=()=>{
             toast.success("Project Created");
             queryClient.invalidateQueries({queryKey:["projects"]});
         },
-        onError:(error)=>{
+        onError:()=>{
             toast.error("Failed to create workspace");
         }
     })

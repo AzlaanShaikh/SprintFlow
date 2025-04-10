@@ -24,6 +24,7 @@ import {
   import {zodResolver} from "@hookform/resolvers/zod"
 import { registerSchema } from "@/features/schemas"
 import { useRegister } from "../api/use-register"
+import { signUpWithGithub, signUpWithGoogle } from "@/lib/oauth"
 
 
 
@@ -119,6 +120,7 @@ const onSubmit =(values:z.infer<typeof registerSchema>)=>{
             </div>
             <CardContent className="p-7 flex flex-col gap-y-4">
                 <Button 
+                onClick={()=>signUpWithGoogle()}
                disabled={isPending}
                 variant="secondary"
                 size="lg"
@@ -127,6 +129,7 @@ const onSubmit =(values:z.infer<typeof registerSchema>)=>{
                     <FcGoogle className="mr-2 size-5"/>
                     Login with Google</Button>
                  <Button 
+                 onClick={()=>signUpWithGithub()}
                 disabled={isPending}
                 variant="secondary"
                 size="lg"
