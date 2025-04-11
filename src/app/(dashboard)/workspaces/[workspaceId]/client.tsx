@@ -38,14 +38,16 @@ export const WorkspaceIdClient = () => {
 
     const isLoading= isLoadingAnalytics || isLoadingTasks || isLoadingProjects || isLoadingMembers;
 
-    if(!analytics || !tasks || !projects || !members){
-        return <PageError message="Failed to load workspace data"/>
-    }
-    
     if(isLoading){
         return(
             <PageLoader/>
         )}
+
+    if(!analytics || !tasks || !projects || !members){
+        return <PageError message="Failed to load workspace data"/>
+    }
+    
+    
 
         
 
